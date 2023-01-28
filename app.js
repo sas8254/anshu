@@ -10,8 +10,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const flash = require("connect-flash");
 const ExpressError = require("./utils/ExpressError");
-const campgroundRoutes = require("./routes/campground");
-const reviewRoutes = require("./routes/reviews");
+const postRoutes = require("./routes/posts");
+const commentRoutes = require("./routes/comments");
 const userRoutes = require("./routes/users");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -45,8 +45,6 @@ app.use(helmet());
 
 const scriptSrcUrls = [
   "https://stackpath.bootstrapcdn.com",
-  "https://api.tiles.mapbox.com",
-  "https://api.mapbox.com",
   "https://kit.fontawesome.com",
   "https://cdnjs.cloudflare.com",
   "https://cdn.jsdelivr.net",
@@ -54,24 +52,15 @@ const scriptSrcUrls = [
 const styleSrcUrls = [
   "https://kit-free.fontawesome.com",
   "https://stackpath.bootstrapcdn.com",
-  "https://api.mapbox.com",
-  "https://api.tiles.mapbox.com",
   "https://fonts.googleapis.com",
   "https://use.fontawesome.com",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css",
-];
-const connectSrcUrls = [
-  "https://api.mapbox.com",
-  "https://*.tiles.mapbox.com",
-  "https://events.mapbox.com",
-  "https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js.map",
 ];
 const fontSrcUrls = [];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: [],
-      connectSrc: ["'self'", ...connectSrcUrls],
       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
       workerSrc: ["'self'", "blob:"],
@@ -129,18 +118,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/reviews", reviewRoutes);
+app.use("/posts", postRoutes);
+app.use("/posts/:id/comments", commentRoutes);
 app.use("/", userRoutes);
 
-app.get("/fakeuser", async (req, res) => {
-  const user = new User({ username: "sam", email: "sam@gmail.com" });
-  const fullUser = await User.register(user, "monkey");
-  res.send(fullUser);
-});
-
 app.get("/", (req, res) => {
-  res.render("campgrounds/home");
+  res.render("posts/home");
 });
 
 app.all("*", (req, res, next) => {

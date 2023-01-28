@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') %>
+<h1>All Posts</h1>
+<div>
+  <a href="/posts/new">Add Post</a>
+</div>
+<ul>
+  <% for(let post of posts){%>
+  <div class="card mb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <% if(post.images.length){ %>
+        <img
+          class="img-fluid"
+          src="<%= post.images[0].url %>"
+          alt=""
+          crossorigin
+        />
+        <% }else{ %>
+        <img
+          class="img-fluid"
+          src="https://res.cloudinary.com/dwkrtdkxt/image/upload/v1673186576/YelpCamp/mqlhapgyyr0ltyucrazy.jpg"
+          alt=""
+          crossorigin
+        />
+        <% } %>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5><%=post.title %></h5>
+          <p class="card-text"><%=post.postText %></p>
+          <a href="/posts/<%=post._id%>" class="btn btn-primary"
+            ><%=post.title %>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</ul>
