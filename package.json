@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/sas8254/yelpcamp_v1#readme",
   "dependencies": {
-    "@mapbox/mapbox-sdk": "^0.14.0",
     "cloudinary": "^1.33.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.6.0",
