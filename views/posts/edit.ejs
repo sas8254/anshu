@@ -41,7 +41,7 @@
       </div>
       <div class="mb-3">
         <% post.images.forEach( (img, i)=>{ %>
-          <img class="img-thumbnail " src="<%=img.thumbnail%>" alt="">
+          <img class="img-thumbnail " src="<%=img.thumbnail%>" alt="" crossorigin>
           <div class="form-check ">
             <input class="form-check-input" type="checkbox" value="<%=img.filename%>" name="deleteImages[]" id="image-<%=i%>">
             <label class="form-check-label" for="image-<%=i%>">
